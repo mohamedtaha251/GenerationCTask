@@ -28,7 +28,6 @@ fun HomeScreen(navController: NavController, viewModel: CarViewModel) {
     var model by remember { mutableStateOf("") }
 
 
-
     // Use an initial empty list if cars is empty initially
     val cars by viewModel.cars.collectAsState(initial = emptyList())
 
@@ -37,8 +36,7 @@ fun HomeScreen(navController: NavController, viewModel: CarViewModel) {
         if (model.isNotEmpty()) {
             // You can call your search method here, for example:
             viewModel.searchCars(model)
-        }else
-        {
+        } else {
             viewModel.loadCars()
         }
     }
@@ -49,7 +47,9 @@ fun HomeScreen(navController: NavController, viewModel: CarViewModel) {
         BasicTextField(
             value = model,
             onValueChange = { model = it },
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             decorationBox = { innerTextField ->
                 Box(Modifier.padding(8.dp)) {
                     if (model.isEmpty()) {
@@ -70,7 +70,10 @@ fun HomeScreen(navController: NavController, viewModel: CarViewModel) {
         } else {
             // Display the cars
             cars.forEach { car ->
-                Row(Modifier.clickable { navController.navigate("details/${car.plateNumber}") }) {
+                Row(Modifier.clickable {
+                    navController.navigate("details/${car.plateNumber}")
+                }) {
+                    Spacer(Modifier.height(10.dp))
                     Text(text = car.plateNumber)
                 }
             }

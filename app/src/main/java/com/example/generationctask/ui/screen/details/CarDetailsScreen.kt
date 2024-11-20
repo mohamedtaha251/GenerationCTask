@@ -22,10 +22,10 @@ import com.example.generationctask.ui.viewmodel.CarViewModel
 @Composable
 fun CarDetailsScreen(
     navController: NavController,
-    carId: String?,
+    plateNumber: String?,
     viewModel: CarViewModel
 ) {
-    val car = viewModel.cars.collectAsState().value.firstOrNull { it.plateNumber == carId }
+    val car = viewModel.cars.collectAsState().value.firstOrNull { it.plateNumber == plateNumber }
 
     if (car == null) {
         Text("Car not found", modifier = Modifier.fillMaxSize(), textAlign = TextAlign.Center)
@@ -44,6 +44,7 @@ fun CarDetailsScreen(
                     Text(text = "Car Details", style = MaterialTheme.typography.headlineLarge)
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(text = "Name: ${car.brand}")
+                    Text(text = "plateNumber: ${car.plateNumber}")
                     Text(text = "Color: ${car.color}")
                 }
             }

@@ -29,9 +29,9 @@ class MainActivity : ComponentActivity() {
                     composable("home") {
                         HomeScreen(navController = navController, viewModel = carViewModel)
                     }
-                    composable("details/{carId}") { backStackEntry ->
-                        val carId = backStackEntry.arguments?.getString("carId")
-                        CarDetailsScreen(navController = navController, carId = carId, viewModel = carViewModel)
+                    composable("details/{plateNumber}") { backStackEntry ->
+                        val plateNumber = backStackEntry.arguments?.getString("plateNumber")
+                        CarDetailsScreen(navController = navController, plateNumber = plateNumber, viewModel = carViewModel)
                     }
                 }
             }
