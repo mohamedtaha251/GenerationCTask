@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                         HomeScreen(navController = navController, viewModel = carViewModel)
                     }
                     composable("details/{carId}") { backStackEntry ->
-                        val carId = backStackEntry.arguments?.getString("carId")?.toInt()
+                        val carId = backStackEntry.arguments?.getString("carId")
                         CarDetailsScreen(navController = navController, carId = carId, viewModel = carViewModel)
                     }
                 }

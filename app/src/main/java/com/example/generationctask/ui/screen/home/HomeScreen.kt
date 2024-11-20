@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,44 +25,42 @@ import com.example.generationctask.ui.viewmodel.CarViewModel
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: CarViewModel) {
-    var price by remember { mutableStateOf("") }
-    var color by remember { mutableStateOf("") }
+    var model by remember { mutableStateOf("") }
 
 
-    viewModel.loadCars()
+
     // Use an initial empty list if cars is empty initially
     val cars by viewModel.cars.collectAsState(initial = emptyList())
 
+    // Trigger search when the model changes (or starts typing)
+    LaunchedEffect(model) {
+        if (model.isNotEmpty()) {
+            // You can call your search method here, for example:
+            viewModel.searchCars(model)
+        }else
+        {
+            viewModel.loadCars()
+        }
+    }
+
+
     Column(Modifier.padding(16.dp)) {
-        // Price TextField with placeholder for better visibility
+        // model TextField with placeholder for better visibility
         BasicTextField(
-            value = price,
-            onValueChange = { price = it },
+            value = model,
+            onValueChange = { model = it },
             modifier = Modifier.fillMaxWidth().padding(8.dp),
             decorationBox = { innerTextField ->
                 Box(Modifier.padding(8.dp)) {
-                    if (price.isEmpty()) {
-                        Text("Enter price", color = Color.Gray)
+                    if (model.isEmpty()) {
+                        Text("Enter model", color = Color.Gray)
                     }
                     innerTextField()
                 }
             }
         )
 
-        // Color TextField with placeholder
-        BasicTextField(
-            value = color,
-            onValueChange = { color = it },
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
-            decorationBox = { innerTextField ->
-                Box(Modifier.padding(8.dp)) {
-                    if (color.isEmpty()) {
-                        Text("Enter color", color = Color.Gray)
-                    }
-                    innerTextField()
-                }
-            }
-        )
+
 
         Spacer(Modifier.height(16.dp))
 

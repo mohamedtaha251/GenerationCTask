@@ -19,10 +19,9 @@ class CarViewModel(private val repository: CarRepository) : ViewModel() {
         }
     }
 
-    fun searchCars(price: Double?, color: String?) {
+    fun searchCars(number: String?) {
         val filteredCars = repository.getCars().filter { car ->
-            (price == null || car.unitPrice == price) &&
-            (color.isNullOrEmpty() || car.color.equals(color, true))
+            (number == null || car.plateNumber.contains(number,true))
         }
         _cars.value = filteredCars
     }
