@@ -26,24 +26,17 @@ import com.example.generationctask.ui.viewmodel.CarViewModel
 @Composable
 fun HomeScreen(navController: NavController, viewModel: CarViewModel) {
     var model by remember { mutableStateOf("") }
-
-
-    // Use an initial empty list if cars is empty initially
     val cars by viewModel.cars.collectAsState(initial = emptyList())
 
-    // Trigger search when the model changes (or starts typing)
     LaunchedEffect(model) {
         if (model.isNotEmpty()) {
-            // You can call your search method here, for example:
             viewModel.searchCars(model)
         } else {
             viewModel.loadCars()
         }
     }
 
-
     Column(Modifier.padding(16.dp)) {
-        // model TextField with placeholder for better visibility
         BasicTextField(
             value = model,
             onValueChange = { model = it },
@@ -60,15 +53,11 @@ fun HomeScreen(navController: NavController, viewModel: CarViewModel) {
             }
         )
 
-
-
         Spacer(Modifier.height(16.dp))
 
-        // Check if the cars list is empty
         if (cars.isEmpty()) {
             Text(text = "No cars available")
         } else {
-            // Display the cars
             cars.forEach { car ->
                 Row(Modifier.clickable {
                     navController.navigate("details/${car.plateNumber}")

@@ -18,7 +18,6 @@ class CarRepository(private val context: Context) {
 
         val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
-        // Define the type for List<Car>
         val listType = Types.newParameterizedType(List::class.java, Car::class.java)
         val adapter = moshi.adapter<List<Car>>(listType)
 
